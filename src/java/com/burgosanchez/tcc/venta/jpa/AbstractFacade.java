@@ -6,14 +6,8 @@
 package com.burgosanchez.tcc.venta.jpa;
 
 import java.util.List;
-import java.util.Set;
-import javax.faces.validator.Validator;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-import static javax.ws.rs.core.Response.accepted;
 
 /**
  *
