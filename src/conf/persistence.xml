@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="TccEJBPU" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>java:/jboss/datasources/TccDS</jta-data-source>
+    <class>com.burgosanchez.tcc.venta.ejb.Cliente</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Condicion</class>
+    <class>com.burgosanchez.tcc.venta.ejb.CondicionEvento</class>
+    <class>com.burgosanchez.tcc.venta.ejb.DireccionPersona</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Entrada</class>
+    <class>com.burgosanchez.tcc.venta.ejb.EventoCab</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Horario</class>
+    <class>com.burgosanchez.tcc.venta.ejb.IdentPersona</class>
+    <class>com.burgosanchez.tcc.venta.ejb.ListaPrecio</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Localidad</class>
+    <class>com.burgosanchez.tcc.venta.ejb.LocalidadEvento</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Pais</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Persona</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Proveedor</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Sector</class>
+    <class>com.burgosanchez.tcc.venta.ejb.TelPersona</class>
+    <class>com.burgosanchez.tcc.venta.ejb.TipoEvento</class>
+    <class>com.burgosanchez.tcc.venta.ejb.TipoIdentificacion</class>
+    <class>com.burgosanchez.tcc.venta.ejb.Usuario</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
+</persistence>
