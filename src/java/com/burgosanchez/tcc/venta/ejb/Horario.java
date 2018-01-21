@@ -51,6 +51,8 @@ public class Horario implements Serializable {
     @Size(max = 1)
     @Column(name = "DISPONIBLE")
     private String disponible;
+    @Column(name = "APERTURA")
+    private Date apertura;
     @JoinColumn(name = "COD_EVENTO", referencedColumnName = "COD_EVENTO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private EventoCab eventoCab;
@@ -112,6 +114,15 @@ public class Horario implements Serializable {
     public void setEventoCab(EventoCab eventoCab) {
         this.eventoCab = eventoCab;
     }
+
+    public Date getApertura() {
+        return apertura;
+    }
+
+    public void setApertura(Date apertura) {
+        this.apertura = apertura;
+    }
+    
 
     @XmlTransient
     public List<Entrada> getEntradaList() {

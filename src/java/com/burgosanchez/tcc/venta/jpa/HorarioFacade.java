@@ -51,7 +51,7 @@ public class HorarioFacade extends AbstractFacade<Horario> {
 
     public void generaHorarios(String evento, String hora_desde, String hora_hasta,
             String fecha_desde, String fecha_hasta,
-            Integer dia_desde, Integer dia_hasta, Integer periodo) throws ParseException {
+            Integer dia_desde, Integer dia_hasta, Integer periodo,String apertura) throws ParseException {
         
         StoredProcedureQuery sp = getEntityManager().createStoredProcedureQuery("tcc.crea_horarios");
         sp.registerStoredProcedureParameter("hora_desde", String.class, ParameterMode.IN);
@@ -62,6 +62,7 @@ public class HorarioFacade extends AbstractFacade<Horario> {
         sp.registerStoredProcedureParameter("dia_hasta", Integer.class, ParameterMode.IN);
         sp.registerStoredProcedureParameter("periodo", Integer.class, ParameterMode.IN);
         sp.registerStoredProcedureParameter("evento", String.class, ParameterMode.IN);
+        sp.registerStoredProcedureParameter("apertura", String.class, ParameterMode.IN);
 
 
         sp.setParameter("hora_desde", hora_desde);
@@ -72,6 +73,7 @@ public class HorarioFacade extends AbstractFacade<Horario> {
         sp.setParameter("dia_hasta", dia_hasta);
         sp.setParameter("periodo", periodo);
         sp.setParameter("evento", evento);
+        sp.setParameter("apertura", apertura);
 
         sp.execute();
     }
