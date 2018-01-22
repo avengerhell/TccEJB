@@ -72,21 +72,20 @@ public class ClienteFacade extends AbstractFacade<Cliente> {
 
     }
 
-    public List<Cliente> obtenerClientexNom(Map<String, Object> parameters) {
+    public List<Cliente> obtenerClientexNom(String nombre) {
         List<Cliente> result;
 
         try {
             StringBuilder sql = new StringBuilder();
 
-            sql.append("SELECT b ");
+            sql.append("SELECT b.* ");
             sql.append("  FROM Persona a, Cliente b ");
-            sql.append("  WHERE a.codPersona = b.codPersona ");
-            sql.append(" AND lower(a.nombre) like :clie");
+            sql.append("  WHERE a.cod_Persona = b.cod_Persona ");
+            sql.append(" AND lower(a.nombre) like ?");
 
-            Query q = getEntityManager().createQuery(sql.toString());
-            for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-                q.setParameter(entry.getKey(), entry.getValue());
-            }
+            Query q = getEntityManager().createNativeQuery(sql.toString(), Cliente.class);
+            q.setParameter(1, nombre);
+
             List l = q.getResultList();
             if (l == null || l.isEmpty()) {
                 return null;
