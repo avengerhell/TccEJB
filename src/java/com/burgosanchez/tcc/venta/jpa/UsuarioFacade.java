@@ -7,6 +7,7 @@ package com.burgosanchez.tcc.venta.jpa;
 
 import com.burgosanchez.tcc.venta.bean.UsuariosView;
 import com.burgosanchez.tcc.venta.ejb.EventoCab;
+import com.burgosanchez.tcc.venta.ejb.Sector;
 import com.burgosanchez.tcc.venta.ejb.Usuario;
 import java.util.Date;
 import java.util.LinkedList;
@@ -69,14 +70,14 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     }
 
-    public void insertarUsuarioEvento(Usuario u, EventoCab ev) {
+    public void insertarUsuarioEvento(Usuario u, EventoCab ev,Sector s) {
         List<Usuario> result;
 
         try {
             StringBuilder sql = new StringBuilder();
 
-            sql.append("INSERT INTO USUARIO_EVENTO (cod_evento,cod_usuario)");
-            sql.append("  VALUES (?1,?2) ");
+            sql.append("INSERT INTO USUARIO_EVENTO (cod_evento,cod_usuario, cod_sector)");
+            sql.append("  VALUES (?1,?2,?3) ");
             
             
 
@@ -84,6 +85,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
             q.setParameter(2, u.getUsuarioPK().getCodUsuario());
             q.setParameter(1, ev.getCodEvento());
+            q.setParameter(3, s.getSectorPK().getCodSector());
 
             q.executeUpdate();
             
