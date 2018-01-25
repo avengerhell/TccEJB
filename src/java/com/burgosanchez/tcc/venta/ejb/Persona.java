@@ -70,13 +70,11 @@ public class Persona implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 60)
+    @Size(max = 60)
     @Column(name = "APELLIDO")
     private String apellido;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
+    @Size(max = 1)
     @Column(name = "SEXO")
     private String sexo;
     @Column(name = "FEC_NACIMIENTO")

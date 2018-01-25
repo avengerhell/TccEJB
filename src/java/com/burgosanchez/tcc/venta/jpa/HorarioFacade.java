@@ -78,6 +78,28 @@ public class HorarioFacade extends AbstractFacade<Horario> {
         sp.execute();
     }
     
+    public void generaHorarios2(String evento, String hora_desde, String hora_hasta,
+            String fecha_desde, String fecha_hasta,String apertura) throws ParseException {
+        
+        StoredProcedureQuery sp = getEntityManager().createStoredProcedureQuery("tcc.crea_horarios2");
+        sp.registerStoredProcedureParameter("hora_desde", String.class, ParameterMode.IN);
+        sp.registerStoredProcedureParameter("hora_hasta", String.class, ParameterMode.IN);
+        sp.registerStoredProcedureParameter("fecha_desde", String.class, ParameterMode.IN);
+        sp.registerStoredProcedureParameter("fecha_hasta", String.class, ParameterMode.IN);
+        sp.registerStoredProcedureParameter("evento", String.class, ParameterMode.IN);
+        sp.registerStoredProcedureParameter("apertura", String.class, ParameterMode.IN);
+
+
+        sp.setParameter("hora_desde", hora_desde);
+        sp.setParameter("hora_hasta", hora_hasta);
+        sp.setParameter("fecha_desde", fecha_desde);
+        sp.setParameter("fecha_hasta", fecha_hasta);
+        sp.setParameter("evento", evento);
+        sp.setParameter("apertura", apertura);
+
+        sp.execute();
+    }
+    
     
     public List<Horario> obtenerHorarioEven(String cod){
         try{
