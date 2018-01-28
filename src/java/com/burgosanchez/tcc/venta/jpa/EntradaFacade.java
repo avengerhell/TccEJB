@@ -7,7 +7,9 @@ package com.burgosanchez.tcc.venta.jpa;
 
 import com.burgosanchez.tcc.venta.bean.EntradaCliente;
 import com.burgosanchez.tcc.venta.bean.EntradaView;
+import com.burgosanchez.tcc.venta.bean.TotalEventoChart;
 import com.burgosanchez.tcc.venta.ejb.Entrada;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -224,6 +226,84 @@ public class EntradaFacade extends AbstractFacade<Entrada> {
                     }
                     if (o[11] != null) {
                         crb.setCodEvento((String) o[11]);
+                    }
+                    result.add(crb);
+                }
+            }
+            //q.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            return result;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+        
+    }
+     
+    public List<TotalEventoChart> obtenerTotalEntradas(){
+        List<TotalEventoChart> result;
+
+        try {
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("select ev.nombre, count(e.cod_entrada) ");
+            sql.append("  from entrada e   ");
+            sql.append("        join evento_cab ev on ev.cod_evento = e.cod_evento  ");
+            sql.append("    group by ev.nombre  ");
+            result  = new LinkedList<>();
+            Query q = getEntityManager().createNativeQuery(sql.toString());
+            
+            List<Object[]> l = q.getResultList();
+            if (l == null || l.isEmpty()) {
+                return null;
+            }else{
+                for (Object[] o : l) {
+                    TotalEventoChart crb = new TotalEventoChart();
+                    if (o[0] != null) {
+                        crb.setNombre((String) o[0]);
+                    }
+                    if (o[1] != null) {
+                        crb.setTotal((BigDecimal) o[1]);
+                    }
+                    result.add(crb);
+                }
+            }
+            //q.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            return result;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+        
+    }
+    
+    public List<TotalEventoChart> obtenerTotalEntradasSexo(String sexo){
+        List<TotalEventoChart> result;
+
+        try {
+            StringBuilder sql = new StringBuilder();
+
+            sql.append("select ev.nombre,count(e.cod_entrada) ");
+            sql.append("  from entrada e   ");
+            sql.append("       join cliente c on c.cod_cliente = e.cod_cliente  ");
+            sql.append("       join persona p on p.cod_persona = c.cod_persona  ");
+            sql.append("       join evento_cab ev on ev.cod_evento = e.cod_evento  ");
+            sql.append(" where p.sexo = ?1  ");
+            sql.append("  group by ev.nombre,Decode(p.sexo,'H','Hombre','Mujer') ");
+            sql.append("    order by 1  ");
+            result  = new LinkedList<>();
+            Query q = getEntityManager().createNativeQuery(sql.toString());
+            q.setParameter(1, sexo);
+            List<Object[]> l = q.getResultList();
+            if (l == null || l.isEmpty()) {
+                return null;
+            }else{
+                for (Object[] o : l) {
+                    TotalEventoChart crb = new TotalEventoChart();
+                    if (o[0] != null) {
+                        crb.setNombre((String) o[0]);
+                    }
+                    if (o[1] != null) {
+                        crb.setTotal((BigDecimal) o[1]);
                     }
                     result.add(crb);
                 }

@@ -6,6 +6,7 @@
 package com.burgosanchez.tcc.venta.jpa;
 
 import com.burgosanchez.tcc.venta.ejb.ListaPrecio;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,7 +31,7 @@ public class ListaPrecioFacade extends AbstractFacade<ListaPrecio> {
     public ListaPrecioFacade() {
         super(ListaPrecio.class);
     }
-    
+
     public Integer obtenerSecuenciaVal() {
         Integer val = null;
         String sq = "";
@@ -43,10 +44,10 @@ public class ListaPrecioFacade extends AbstractFacade<ListaPrecio> {
         }
         return val;
     }
-    
-    public List<ListaPrecio> obtenerCondicionEven(String cod){
-        
-        try{
+
+    public List<ListaPrecio> obtenerCondicionEven(String cod) {
+
+        try {
             StringBuilder sb = new StringBuilder();
 
             sb.append(" SELECT l ");
@@ -57,7 +58,43 @@ public class ListaPrecioFacade extends AbstractFacade<ListaPrecio> {
             q.setParameter(1, cod);
 
             return (List<ListaPrecio>) q.getResultList();
-        }catch(Exception e){
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public Boolean verificaLista(String codEvento, String codSector, Date inicio, Date fin) {
+
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(" SELECT l ");
+            sb.append(" from lista_precio l ");
+            sb.append(" where cod_evento = ?1 ");
+            sb.append("   and cod_sector = ?2 ");
+            sb.append("   and (?3 between l.fec_inicio and l.fec_fin ");
+            sb.append("        or ?4 between l.fec_inicio and l.fec_fin ");
+            sb.append("        or l.fec_inicio between ?5 and ?6 ");
+            sb.append("        or l.fec_fin between ?7 and ?8)");
+
+            Query q = getEntityManager().createNativeQuery(sb.toString());
+            q.setParameter(1, codEvento);
+            q.setParameter(2, codSector);
+            q.setParameter(3, inicio);
+            q.setParameter(4, fin);
+            q.setParameter(5, inicio);
+            q.setParameter(6, fin);
+            q.setParameter(7, inicio);
+            q.setParameter(8, fin);
+            List<Object> l = q.getResultList();
+            if (l != null) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
             System.out.println(e);
             return null;
         }
