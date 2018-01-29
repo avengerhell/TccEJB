@@ -6,6 +6,7 @@
 package com.burgosanchez.tcc.venta.jpa;
 
 import com.burgosanchez.tcc.venta.ejb.ListaPrecio;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -68,8 +69,9 @@ public class ListaPrecioFacade extends AbstractFacade<ListaPrecio> {
 
         try {
             StringBuilder sb = new StringBuilder();
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-            sb.append(" SELECT l ");
+            sb.append(" SELECT l.* ");
             sb.append(" from lista_precio l ");
             sb.append(" where cod_evento = ?1 ");
             sb.append("   and cod_sector = ?2 ");
@@ -81,14 +83,14 @@ public class ListaPrecioFacade extends AbstractFacade<ListaPrecio> {
             Query q = getEntityManager().createNativeQuery(sb.toString());
             q.setParameter(1, codEvento);
             q.setParameter(2, codSector);
-            q.setParameter(3, inicio);
-            q.setParameter(4, fin);
-            q.setParameter(5, inicio);
-            q.setParameter(6, fin);
-            q.setParameter(7, inicio);
-            q.setParameter(8, fin);
+            q.setParameter(3, format.format(inicio));
+            q.setParameter(4, format.format(fin));
+            q.setParameter(5, format.format(inicio));
+            q.setParameter(6, format.format(fin));
+            q.setParameter(7, format.format(inicio));
+            q.setParameter(8, format.format(fin));
             List<Object> l = q.getResultList();
-            if (l != null) {
+            if (!l.isEmpty()) {
                 return true;
             } else {
                 return false;
